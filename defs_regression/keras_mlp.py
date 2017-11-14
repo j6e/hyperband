@@ -22,6 +22,7 @@ from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler, Ma
 
 max_layers = 5
 max_layer_size = 100
+iters_mult = 10
 
 space = {
     'scaler': hp.choice('s',
@@ -76,6 +77,7 @@ def print_params(params):
 
 
 def try_params(n_iterations, params, data):
+    n_iterations = int(n_iterations * iters_mult)
     print("iterations:", n_iterations)
     print_params(params)
 
