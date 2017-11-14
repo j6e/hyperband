@@ -1,3 +1,12 @@
+
+**Note:** I'm modding this lib for using it in some personal projects, the goals of the fork are:
+* Update to python3 :heavy_check_mark:
+* Data as an arg, not an import :heavy_check_mark:
+* Add support for other classifiers/regressors in sklearn
+* Add support for prebuilded topologies of keras NN
+* Return the best model in a SKlearn compatible object
+* Revise the relevance of the Polylearn models and decide if they are needed
+
 hyperband
 =========
 
