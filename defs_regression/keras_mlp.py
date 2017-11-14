@@ -33,7 +33,7 @@ space = {
     'batch_size': hp.choice('bs', (16, 32, 64, 128, 256)),
     'shuffle': hp.choice('sh', (False, True)),
     'loss': hp.choice('l', ('mean_absolute_error', 'mean_squared_error')),
-    'optimizer': hp.choice('o', ('rmsprop', 'adagrad', 'adadelta', 'adam', 'adamax'))
+    'optimizer': hp.choice('o', ('rmsprop', 'adagrad', 'adadelta', 'adam', 'adamax', 'sgd'))
 }
 
 # for each hidden layer, we choose size, activation and extras individually
