@@ -4,7 +4,7 @@
 from common_defs import *
 
 # a dict with x_train, y_train, x_test, y_test
-from load_data import data
+#from load_data import data
 
 from xgboost import XGBClassifier as XGB
 
@@ -69,7 +69,7 @@ def get_params():
 
 #
 
-def try_params(n_iterations, params, get_predictions=False):
+def try_params(n_iterations, params, data, get_predictions=False):
     n_estimators = int(round(n_iterations * trees_per_iteration))
     print("n_estimators:", n_estimators)
     pprint(params)

@@ -4,7 +4,7 @@
 from common_defs import *
 
 # a dict with x_train, y_train, x_test, y_test
-from load_data import data
+#from load_data import data
 
 from keras.models import Sequential
 from keras.layers.core import Dense, Dropout
@@ -70,7 +70,7 @@ def print_params(params):
     print()
 
 
-def try_params(n_iterations, params):
+def try_params(n_iterations, params, data):
     print("iterations:", n_iterations)
     print_params(params)
 

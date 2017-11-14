@@ -74,7 +74,7 @@ def print_params(params):
     print()
 
 
-def try_params(n_iterations, params):
+def try_params(n_iterations, params, data):
     print("iterations:", n_iterations)
     print_params(params)
 

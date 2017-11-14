@@ -4,7 +4,7 @@
 from common_defs import *
 
 # a dict with x_train, y_train, x_test, y_test
-from load_data import data
+#from load_data import data
 
 from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler, MaxAbsScaler
 from sklearn.linear_model import SGDClassifier as SGD
@@ -34,7 +34,7 @@ def get_params():
 
 #
 
-def try_params(n_iterations, params):
+def try_params(n_iterations, params, data):
     n_iterations = int(round(n_iterations))
     print("n_iterations:", n_iterations)
     pprint(params)

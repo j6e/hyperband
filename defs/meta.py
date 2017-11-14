@@ -19,7 +19,7 @@ def get_params():
     return params
 
 
-def try_params(n_iterations, params):
+def try_params(n_iterations, params, data):
     params_ = dict(params)
     m = params_.pop('model')
     print(m)

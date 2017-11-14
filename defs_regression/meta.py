@@ -19,9 +19,9 @@ def get_params():
     return params
 
 
-def try_params(n_iterations, params):
+def try_params(n_iterations, params, data):
     params_ = dict(params)
     r = params_.pop('regressor')
     print(r)
 
-    return eval("try_params_{}( n_iterations, params_ )".format(r))
+    return eval("try_params_{}( n_iterations, params_, data )".format(r))

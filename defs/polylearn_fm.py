@@ -4,7 +4,7 @@
 from common_defs import *
 
 # a dict with x_train, y_train, x_test, y_test
-from load_data import data
+#from load_data import data
 
 from polylearn import FactorizationMachineClassifier as FM
 from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler, MaxAbsScaler
@@ -34,7 +34,7 @@ def get_params():
 
 #
 
-def try_params(n_iterations, params):
+def try_params(n_iterations, params, data):
     max_iter = int(round(n_iterations * iters_per_iteration))
     print("max_iter:", max_iter)
     pprint(params)

@@ -4,7 +4,7 @@
 from common_defs import *
 
 # a dict with x_train, y_train, x_test, y_test
-from load_data import data
+#from load_data import data
 
 from sklearn.ensemble import ExtraTreesClassifier as XT
 
@@ -30,7 +30,7 @@ def get_params():
 
 #
 
-def try_params(n_iterations, params):
+def try_params(n_iterations, params, data):
     n_estimators = int(round(n_iterations * trees_per_iteration))
     print("n_estimators:", n_estimators)
     pprint(params)
