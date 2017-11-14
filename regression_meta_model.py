@@ -1,5 +1,3 @@
-"A regression example. Mostly the same, only importing from defs_regression."
-
 import sys
 import pickle as pickle
 from pprint import pprint
@@ -9,12 +7,12 @@ from hyperband import Hyperband
 from defs_regression.meta import get_params, try_params
 
 
-def regression_meta_model(data, output_file):
+def regression_meta_model(data, output_file='results.pkl'):
     if not output_file.endswith('.pkl'):
         output_file += '.pkl'
     print("Will save results to", output_file)
 
-#
+    #
     try_params_data = partial(try_params, data=data)
 
     hb = Hyperband(get_params, try_params_data)

@@ -24,4 +24,4 @@ def try_params(n_iterations, params, data):
     m = params_.pop('model')
     print(m)
 
-    return eval("try_params_{}( n_iterations, params_ )".format(m))
+    return eval("try_params_{}( n_iterations, params_, data )".format(m))
