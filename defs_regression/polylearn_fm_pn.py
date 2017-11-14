@@ -78,6 +78,5 @@ def try_params(n_iterations, params, data):
 
     params_.pop('scaler')
 
-    clf = eval("{}( max_iter = max_iter, verbose = True, \
-		**params_ )".format(classifier))
+    clf = eval("{}( max_iter = max_iter, verbose = True, **params_ )".format(classifier))
     return train_and_eval_sklearn_regressor(clf, local_data)
