@@ -9,7 +9,7 @@ from defs_regression.meta import get_params as get_params_r
 from defs_regression.meta import try_params as try_params_r
 
 
-def classification_meta_model(data, output_file='results.pkl'):
+def classification_meta_model(data, output_file='results.pkl', max_iter=81, eta=3):
     if not output_file.endswith('.pkl'):
         output_file += '.pkl'
     print("Will save results to", output_file)
@@ -17,7 +17,7 @@ def classification_meta_model(data, output_file='results.pkl'):
     #
 
     try_params_data = partial(try_params_c, data=data)
-    hb = Hyperband(get_params_c, try_params_data)
+    hb = Hyperband(get_params_c, try_params_data, max_iter=max_iter, eta=3)
     results = hb.run(skip_last=1)
 
     print("{} total, best:\n".format(len(results)))
@@ -33,8 +33,10 @@ def classification_meta_model(data, output_file='results.pkl'):
     with open(output_file, 'wb') as f:
         pickle.dump(results, f)
 
+    return results
 
-def regression_meta_model(data, output_file='results.pkl'):
+
+def regression_meta_model(data, output_file='results.pkl', max_iter=81, eta=3):
     if not output_file.endswith('.pkl'):
         output_file += '.pkl'
     print("Will save results to", output_file)
@@ -42,7 +44,7 @@ def regression_meta_model(data, output_file='results.pkl'):
     #
     try_params_data = partial(try_params_r, data=data)
 
-    hb = Hyperband(get_params_r, try_params_data)
+    hb = Hyperband(get_params_r, try_params_data, max_iter=max_iter, eta=eta)
     results = hb.run(skip_last=1)
 
     print("{} total, best:\n".format(len(results)))
@@ -57,3 +59,5 @@ def regression_meta_model(data, output_file='results.pkl'):
 
     with open(output_file, 'wb') as f:
         pickle.dump(results, f)
+
+    return results

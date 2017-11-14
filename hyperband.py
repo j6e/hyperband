@@ -6,12 +6,12 @@ from time import time, ctime
 
 
 class Hyperband:
-    def __init__(self, get_params_function, try_params_function):
+    def __init__(self, get_params_function, try_params_function, max_iter=81, eta=3):
         self.get_params = get_params_function
         self.try_params = try_params_function
 
-        self.max_iter = 81  # maximum iterations per configuration
-        self.eta = 3  # defines configuration downsampling rate (default = 3)
+        self.max_iter = max_iter  # maximum iterations per configuration
+        self.eta = eta # defines configuration downsampling rate (default = 3)
 
         self.logeta = lambda x: log(x) / log(self.eta)
         self.s_max = int(self.logeta(self.max_iter))
