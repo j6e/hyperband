@@ -6,7 +6,7 @@ from common_defs import *
 # a dict with x_train, y_train, x_test, y_test
 #from load_data_for_regression import data
 
-
+import numpy as np
 from keras.models import Sequential
 from keras.layers.core import Dense, Dropout
 from keras.layers.normalization import BatchNormalization as BatchNorm
@@ -130,6 +130,7 @@ def try_params(n_iterations, params, data):
     #
 
     p = model.predict(x_train_, batch_size=params['batch_size'])
+    p = np.nan_to_num(p)
 
     mse = MSE(y_train, p)
     rmse = sqrt(mse)
