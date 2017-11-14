@@ -4,7 +4,8 @@
 from common_defs import *
 
 # a dict with x_train, y_train, x_test, y_test
-from load_data_for_regression import data
+#from load_data_for_regression import data
+
 
 from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler, MaxAbsScaler
 from sklearn.linear_model import SGDRegressor as SGD
