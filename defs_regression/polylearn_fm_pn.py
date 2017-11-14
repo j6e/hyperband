@@ -13,7 +13,7 @@ from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler, Ma
 
 #
 
-iters_per_iteration = 1
+iters_per_iteration = 2
 
 space = {
     'scaler': hp.choice('s',
