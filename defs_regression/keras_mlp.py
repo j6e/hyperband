@@ -141,6 +141,7 @@ def try_params(n_iterations, params, data):
     #
 
     p = model.predict(x_test_, batch_size=params['batch_size'])
+    p = np.nan_to_num(p)
 
     mse = MSE(y_test, p)
     rmse = sqrt(mse)
