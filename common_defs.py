@@ -9,6 +9,9 @@ from pprint import pprint
 from sklearn.metrics import roc_auc_score as AUC, log_loss, accuracy_score as accuracy
 from sklearn.metrics import mean_squared_error as MSE, mean_absolute_error as MAE
 
+from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler, MaxAbsScaler
+
+
 try:
     from hyperopt import hp
     from hyperopt.pyll.stochastic import sample
@@ -74,12 +77,17 @@ def train_and_eval_sklearn_classifier(clf, data):
 ###
 
 # "clf", even though it's a regressor
-def train_and_eval_sklearn_regressor(clf, data):
-    x_train = data['x_train']
+def train_and_eval_sklearn_regressor(clf, data, scaler=None):
     y_train = data['y_train']
-
-    x_test = data['x_test']
     y_test = data['y_test']
+
+    if scaler:
+        scaler = eval("{}()".format(scaler))
+        x_train = scaler.fit_transform(data['x_train'].astype(float))
+        x_test = scaler.transform(data['x_test'].astype(float))
+    else:
+        x_train = data['x_train']
+        x_test = data['x_test']
 
     clf.fit(x_train, y_train)
     p = clf.predict(x_train)
