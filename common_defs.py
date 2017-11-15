@@ -68,7 +68,7 @@ def train_and_eval_sklearn_classifier(clf, data):
     print("# testing  | log loss: {:.2%}, AUC: {:.2%}, accuracy: {:.2%}".format(ll, auc, acc))
 
     # return { 'loss': 1 - auc, 'log_loss': ll, 'auc': auc }
-    return {'loss': ll, 'log_loss': ll, 'auc': auc, 'model': type(clf).__name__}
+    return {'loss': ll, 'log_loss': ll, 'auc': auc}
 
 
 ###
