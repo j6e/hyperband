@@ -120,7 +120,7 @@ def try_params(n_iterations, params, data):
 
     validation_data = (x_test_, y_test)
 
-    early_stopping = EarlyStopping(monitor='val_loss', patience=5, verbose=0)
+    early_stopping = EarlyStopping(monitor='val_loss', patience=10, verbose=0)
 
     history = model.fit(x_train_, y_train,
                         epochs=int(round(n_iterations)),
