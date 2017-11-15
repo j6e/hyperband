@@ -76,7 +76,7 @@ def print_params(params):
     print()
 
 
-def try_params(n_iterations, params, data):
+def try_params(n_iterations, params, data, return_model=False, early_stop=True):
     n_iterations = int(n_iterations * iters_mult)
     print("iterations:", n_iterations)
     print_params(params)
@@ -120,7 +120,11 @@ def try_params(n_iterations, params, data):
 
     validation_data = (x_test_, y_test)
 
-    early_stopping = EarlyStopping(monitor='val_loss', patience=10, verbose=0)
+    if early_stop:
+        early_stopping = EarlyStopping(monitor='val_loss', patience=10, verbose=0)
+    else: # Never stop...
+        early_stopping = EarlyStopping(monitor='train_loss', patience=10000, verbose=0)
+
 
     history = model.fit(x_train_, y_train,
                         epochs=int(round(n_iterations)),
@@ -150,5 +154,7 @@ def try_params(n_iterations, params, data):
     mae = MAE(y_test, p)
 
     print("# testing  | RMSE: {:.4f}, MAE: {:.4f}".format(rmse, mae))
-
-    return {'loss': rmse, 'rmse': rmse, 'mae': mae, 'early_stop': model.stop_training}
+    if return_model:
+        return model
+    else:
+        return {'loss': rmse, 'rmse': rmse, 'mae': mae, 'early_stop': model.stop_training}
