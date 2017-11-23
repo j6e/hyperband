@@ -11,15 +11,17 @@ from keras.layers.core import Dense, Dropout
 from keras.layers.normalization import BatchNormalization as BatchNorm
 from keras.callbacks import EarlyStopping
 from keras.layers.advanced_activations import *
+from keras import regularizers
 
 from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler, MaxAbsScaler
 
 #
 
-# TODO: advanced activations - 'leakyrelu', 'prelu', 'elu', 'thresholdedrelu', 'srelu' 
+# TODO: advanced activations - 'leakyrelu', 'prelu', 'thresholdedrelu', 'srelu'
+# TODO: Regularizations L2, L1, L1_L2 and none
 
-
-max_layers = 5
+max_layers = 4
+max_layer_size = 200
 
 space = {
     'scaler': hp.choice('s',
@@ -29,17 +31,33 @@ space = {
     # 'activation': hp.choice( 'a', ( 'relu', 'sigmoid', 'tanh' )),
     'init': hp.choice('i', ('uniform', 'normal', 'glorot_uniform',
                             'glorot_normal', 'he_uniform', 'he_normal')),
-    'batch_size': hp.choice('bs', (16, 32, 64, 128, 256)),
-    'optimizer': hp.choice('o', ('rmsprop', 'adagrad', 'adadelta', 'adam', 'adamax'))
+    'batch_size': hp.choice('bs', (8, 16, 32, 64, 128, 256)),
+    'optimizer': hp.choice('o', ('rmsprop', 'adagrad', 'adadelta', 'adam', 'adamax', 'sgd'))
 }
 
 # for each hidden layer, we choose size, activation and extras individually
 for i in range(1, max_layers + 1):
-    space['layer_{}_size'.format(i)] = hp.quniform('ls{}'.format(i), 2, 200, 1)
+    space['layer_{}_size'.format(i)] = hp.quniform('ls{}'.format(i),
+                                                   2, max_layer_size, 1)
     space['layer_{}_activation'.format(i)] = hp.choice('a{}'.format(i),
-                                                       ('relu', 'sigmoid', 'tanh'))
+                                                       ('relu', 'sigmoid', 'tanh', 'elu', 'selu'))
+    space['layer_{}_kernel_regularization'.format(i)] = hp.choice('r{}'.format(i),
+                                                            ({'name': 'l1_l2',
+                                                              'rate': hp.choice('kr_l1l2_{}'.format(i), (0.1, 0.01, 0.001, 0.))},
+                                                             {'name': 'l2',
+                                                              'rate': hp.choice('kr_l2_{}'.format(i), (0.1, 0.01, 0.001, 0.))},
+                                                             {'name': 'l1',
+                                                              'rate': hp.choice('kr_l1_{}'.format(i), (0.1, 0.01, 0.001, 0.))}))
+    space['layer_{}_activity_regularization'.format(i)] = hp.choice('r{}'.format(i),
+                                                            ({'name': 'l1_l2',
+                                                              'rate': hp.choice('ar_l1l2_{}'.format(i), (0.1, 0.01, 0.001, 0.))},
+                                                             {'name': 'l2',
+                                                              'rate': hp.choice('ar_l2_{}'.format(i), (0.1, 0.01, 0.001, 0.))},
+                                                             {'name': 'l1',
+                                                              'rate': hp.choice('ar_l1_{}'.format(i), (0.1, 0.01, 0.001, 0.))}))
+
     space['layer_{}_extras'.format(i)] = hp.choice('e{}'.format(i), (
-        {'name': 'dropout', 'rate': hp.uniform('d{}'.format(i), 0.1, 0.5)},
+        {'name': 'dropout', 'rate': hp.uniform('d{}'.format(i), 0.05, 0.5)},
         {'name': 'batchnorm'},
         {'name': None}))
 
@@ -54,11 +72,14 @@ def get_params():
 # print hidden layers config in readable way
 def print_layers(params):
     for i in range(1, params['n_layers'] + 1):
-        print("layer {} | size: {:>3} | activation: {:<7} | extras: {}".format(i,
-                                                                               params['layer_{}_size'.format(i)],
-                                                                               params['layer_{}_activation'.format(i)],
-                                                                               params['layer_{}_extras'.format(i)][
-                                                                                   'name']), end=' ')
+        print("layer {} | size: {:>3} | activation: {:<7} | act_reg: {:5}({:.3f}) | ker_reg: {:5}({:.3f}) | extras: {}".format(i,
+                                                            params['layer_{}_size'.format(i)],
+                                                            params['layer_{}_activation'.format(i)],
+                                                            params['layer_{}_kernel_regularization'.format(i)]['name'],
+                                                            params['layer_{}_kernel_regularization'.format(i)]['rate'],
+                                                            params['layer_{}_activity_regularization'.format(i)]['name'],
+                                                            params['layer_{}_kernel_regularization'.format(i)]['rate'],
+                                                            params['layer_{}_extras'.format(i)]['name']), end=' ')
         if params['layer_{}_extras'.format(i)]['name'] == 'dropout':
             print("- rate: {:.1%}".format(params['layer_{}_extras'.format(i)]['rate']), end=' ')
         print()
@@ -68,6 +89,22 @@ def print_params(params):
     pprint({k: v for k, v in list(params.items()) if not k.startswith('layer_')})
     print_layers(params)
     print()
+
+
+def _get_regularizations(params, layer):
+    if params['layer_{}_kernel_regularization'.format(layer)]['name']:
+        k_reg = eval('regularizers.{}({})'.format(params['layer_{}_kernel_regularization'.format(layer)]['name'],
+                                                  params['layer_{}_kernel_regularization'.format(layer)]['rate']))
+    else:
+        k_reg = None
+
+    if params['layer_{}_activity_regularization'.format(layer)]['name']:
+        a_reg = eval('regularizers.{}({})'.format(params['layer_{}_activity_regularization'.format(layer)]['name'],
+                                                  params['layer_{}_activity_regularization'.format(layer)]['rate']))
+    else:
+        a_reg = None
+
+    return k_reg, a_reg
 
 
 def try_params(n_iterations, params, data):
@@ -88,8 +125,13 @@ def try_params(n_iterations, params, data):
     input_dim = x_train_.shape[1]
 
     model = Sequential()
+
+    k_reg, a_reg = _get_regularizations(params, 1)
+
     model.add(Dense(params['layer_1_size'], init=params['init'],
-                    activation=params['layer_1_activation'], input_dim=input_dim))
+                    activation=params['layer_1_activation'], input_dim=input_dim,
+                    kernel_regularizer=k_reg, activity_regularizer=a_reg))
+    last = 1
 
     for i in range(int(params['n_layers']) - 1):
 
@@ -100,8 +142,18 @@ def try_params(n_iterations, params, data):
         elif params[extras]['name'] == 'batchnorm':
             model.add(BatchNorm())
 
+        k_reg, a_reg = _get_regularizations(params, i + 2)
+
         model.add(Dense(params['layer_{}_size'.format(i + 2)], init=params['init'],
-                        activation=params['layer_{}_activation'.format(i + 2)]))
+                        activation=params['layer_{}_activation'.format(i + 2)],
+                        kernel_regularizer=k_reg, activity_regularizer=a_reg))
+        last = i + 2
+
+    extras = 'layer_{}_extras'.format(last)
+    if params[extras]['name'] == 'dropout':
+        model.add(Dropout(params[extras]['rate']))
+    elif params[extras]['name'] == 'batchnorm':
+        model.add(BatchNorm())
 
     model.add(Dense(1, init=params['init'], activation='sigmoid'))
 
@@ -123,7 +175,6 @@ def try_params(n_iterations, params, data):
                         callbacks=[early_stopping])
 
     #
-
     p = model.predict_proba(x_train_, batch_size=params['batch_size'])
 
     ll = log_loss(y_train, p)
@@ -133,7 +184,6 @@ def try_params(n_iterations, params, data):
     print("\n# training | log loss: {:.2%}, AUC: {:.2%}, accuracy: {:.2%}".format(ll, auc, acc))
 
     #
-
     p = model.predict_proba(x_test_, batch_size=params['batch_size'])
 
     ll = log_loss(y_test, p)

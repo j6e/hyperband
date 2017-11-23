@@ -2,8 +2,10 @@
 from common_defs import *
 
 #regressors = ('gb', 'rf', 'xt', 'sgd', 'polylearn_fm', 'polylearn_pn', 'keras_mlp')
-regressors = ('gb', 'rf', 'xt', 'sgd', 'keras_mlp', 'xgb', 'svm')
+#regressors = ('gb', 'rf', 'xt', 'sgd', 'keras_mlp', 'xgb', 'svm')
+regressors = ['keras_mlp']
 
+print(regressors)
 # import all the functions
 for r in regressors:
     exec("from defs_regression.{} import get_params as get_params_{}".format(r, r))
