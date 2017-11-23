@@ -2,8 +2,8 @@
 from common_defs import *
 
 #regressors = ('gb', 'rf', 'xt', 'sgd', 'polylearn_fm', 'polylearn_pn', 'keras_mlp')
-#regressors = ('gb', 'rf', 'xt', 'sgd', 'keras_mlp', 'xgb', 'svm')
-regressors = ['keras_mlp']
+regressors = ('gb', 'rf', 'xt', 'sgd', 'keras_mlp', 'xgb', 'svm')
+#regressors = ['keras_mlp']
 
 print(regressors)
 # import all the functions
