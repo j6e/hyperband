@@ -167,7 +167,7 @@ def try_params(n_iterations, params, data, return_model=False, early_stop=True):
     model.add(Dense(1, kernel_initializer=params['init'], activation='linear'))
     model.compile(optimizer=params['optimizer'], loss=params['loss'])
 
-    print(model.summary())
+    #print(model.summary())
 
     #
 
