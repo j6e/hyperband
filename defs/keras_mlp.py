@@ -176,6 +176,7 @@ def try_params(n_iterations, params, data):
 
     #
     p = model.predict_proba(x_train_, batch_size=params['batch_size'])
+    p = np.nan_to_num(p)
 
     ll = log_loss(y_train, p)
     auc = AUC(y_train, p)
@@ -185,6 +186,7 @@ def try_params(n_iterations, params, data):
 
     #
     p = model.predict_proba(x_test_, batch_size=params['batch_size'])
+    p = np.nan_to_num(p)
 
     ll = log_loss(y_test, p)
     auc = AUC(y_test, p)
