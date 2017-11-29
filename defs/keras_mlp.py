@@ -168,7 +168,7 @@ def try_params(n_iterations, params, data):
     early_stopping = EarlyStopping(monitor='val_loss', patience=5, verbose=0)
 
     history = model.fit(x_train_, y_train,
-                        nb_epoch=int(round(n_iterations)),
+                        epochs=int(round(n_iterations)),
                         batch_size=params['batch_size'],
                         shuffle=False,
                         validation_data=validation_data,
