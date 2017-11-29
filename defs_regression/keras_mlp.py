@@ -175,9 +175,8 @@ def try_params(n_iterations, params, data, return_model=False, early_stop=True):
 
     if early_stop:
         early_stopping = EarlyStopping(monitor='val_loss', patience=10, verbose=0)
-    else: # Never stop...
+    else:  # Never stop...
         early_stopping = EarlyStopping(monitor='train_loss', patience=10000, verbose=0)
-
 
     history = model.fit(x_train_, y_train,
                         epochs=int(round(n_iterations)),

@@ -128,7 +128,7 @@ def try_params(n_iterations, params, data):
 
     k_reg, a_reg = _get_regularizations(params, 1)
 
-    model.add(Dense(params['layer_1_size'], init=params['init'],
+    model.add(Dense(params['layer_1_size'], kernel_initializer=params['init'],
                     activation=params['layer_1_activation'], input_dim=input_dim,
                     kernel_regularizer=k_reg, activity_regularizer=a_reg))
     last = 1
