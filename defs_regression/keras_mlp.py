@@ -23,7 +23,7 @@ from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler, Ma
 
 max_layers = 3
 max_layer_size = 100
-iters_mult = 5
+iters_mult = 4
 
 space = {
     'scaler': hp.choice('s',
@@ -33,7 +33,7 @@ space = {
     # 'activation': hp.choice( 'a', ( 'relu', 'sigmoid', 'tanh' )),
     'init': hp.choice('i', ('uniform', 'normal', 'glorot_uniform',
                             'glorot_normal', 'he_uniform', 'he_normal')),
-    'batch_size': hp.choice('bs', (8, 16, 32, 64, 128, 256)),
+    'batch_size': hp.choice('bs', (1, 4, 8, 10, 16, 32, 50, 64, 100, 128, 200, 256)),
     'shuffle': hp.choice('sh', (False, True)),
     'loss': hp.choice('l', ('mean_absolute_error', 'mean_squared_error')),
     'optimizer': hp.choice('o', ('rmsprop', 'adagrad', 'adadelta', 'adam', 'adamax', 'sgd'))

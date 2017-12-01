@@ -22,6 +22,7 @@ from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler, Ma
 
 max_layers = 4
 max_layer_size = 200
+iters_mult = 4
 
 space = {
     'scaler': hp.choice('s',
@@ -31,7 +32,8 @@ space = {
     # 'activation': hp.choice( 'a', ( 'relu', 'sigmoid', 'tanh' )),
     'init': hp.choice('i', ('uniform', 'normal', 'glorot_uniform',
                             'glorot_normal', 'he_uniform', 'he_normal')),
-    'batch_size': hp.choice('bs', (8, 16, 32, 64, 128, 256)),
+    'batch_size': hp.choice('bs', (1, 4, 8, 10, 16, 32, 50, 64, 100, 128, 200, 256)),
+    'shuffle': hp.choice('sh', (False, True)),
     'optimizer': hp.choice('o', ('rmsprop', 'adagrad', 'adadelta', 'adam', 'adamax', 'sgd'))
 }
 
@@ -108,6 +110,7 @@ def _get_regularizations(params, layer):
 
 
 def try_params(n_iterations, params, data):
+    n_iterations = int(n_iterations * iters_mult)
     print("iterations:", n_iterations)
     print_params(params)
 
