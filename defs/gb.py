@@ -1,12 +1,13 @@
 "function (and parameter space) definitions for hyperband"
 "binary classification with gradient boosting"
 
+from sklearn.ensemble import GradientBoostingClassifier as GB
+
 from common_defs import *
 
 # a dict with x_train, y_train, x_test, y_test
 #from load_data import data
 
-from sklearn.ensemble import GradientBoostingClassifier as GB
 
 #
 

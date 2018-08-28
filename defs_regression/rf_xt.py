@@ -2,14 +2,15 @@
 "regression with random forest / extra trees"
 "both have the same parameters"
 
+from sklearn.ensemble import ExtraTreesRegressor as XT
+from sklearn.ensemble import RandomForestRegressor as RF
+
 from common_defs import *
 
 # a dict with x_train, y_train, x_test, y_test
 #from load_data_for_regression import data
 
 
-from sklearn.ensemble import RandomForestRegressor as RF
-from sklearn.ensemble import ExtraTreesRegressor as XT
 
 #
 

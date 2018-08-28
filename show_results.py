@@ -2,9 +2,8 @@
 
 "load pickled results, show the best"
 
-import sys
 import pickle
-
+import sys
 from pprint import pprint
 
 try:

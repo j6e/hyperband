@@ -1,8 +1,8 @@
-import numpy as np
-
+from math import ceil, log
 from random import random
-from math import log, ceil
-from time import time, ctime
+from time import ctime, time
+
+import numpy as np
 
 
 class Hyperband:

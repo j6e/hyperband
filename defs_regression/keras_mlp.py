@@ -1,19 +1,20 @@
 "function (and parameter space) definitions for hyperband"
 "regression with Keras (multilayer perceptron)"
 
+import numpy as np
+from keras.callbacks import EarlyStopping
+from keras.layers.advanced_activations import *
+from keras.layers.core import Dense, Dropout
+from keras.layers.normalization import BatchNormalization as BatchNorm
+from keras.models import Sequential
+from sklearn.preprocessing import MaxAbsScaler, MinMaxScaler, RobustScaler, StandardScaler
+
 from common_defs import *
 
 # a dict with x_train, y_train, x_test, y_test
 #from load_data_for_regression import data
 
-import numpy as np
-from keras.models import Sequential
-from keras.layers.core import Dense, Dropout
-from keras.layers.normalization import BatchNormalization as BatchNorm
-from keras.callbacks import EarlyStopping
-from keras.layers.advanced_activations import *
 
-from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler, MaxAbsScaler
 
 #
 

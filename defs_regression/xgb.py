@@ -2,12 +2,12 @@
 "regression with XGBoost"
 
 from common_defs import *
+from xgboost import XGBRegressor as XGB
 
 # a dict with x_train, y_train, x_test, y_test
 # from load_data_for_regression import data
 
 
-from xgboost import XGBRegressor as XGB
 
 #
 

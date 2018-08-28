@@ -1,14 +1,15 @@
 "function (and parameter space) definitions for hyperband"
 "regression with polylearn polynomial networks"
 
+from sklearn.preprocessing import MaxAbsScaler, MinMaxScaler, RobustScaler, StandardScaler
+
 from common_defs import *
+from polylearn import PolynomialNetworkRegressor as PN
 
 # a dict with x_train, y_train, x_test, y_test
 #from load_data_for_regression import data
 
 
-from polylearn import PolynomialNetworkRegressor as PN
-from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler, MaxAbsScaler
 
 #
 

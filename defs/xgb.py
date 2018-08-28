@@ -2,11 +2,11 @@
 "binary classification with XGBoost"
 
 from common_defs import *
+from xgboost import XGBClassifier as XGB
 
 # a dict with x_train, y_train, x_test, y_test
 #from load_data import data
 
-from xgboost import XGBClassifier as XGB
 
 #
 

@@ -1,13 +1,14 @@
 "function (and parameter space) definitions for hyperband"
 "binary classification with extremely linear SGD classifier"
 
+from sklearn.linear_model import SGDClassifier as SGD
+from sklearn.preprocessing import MaxAbsScaler, MinMaxScaler, RobustScaler, StandardScaler
+
 from common_defs import *
 
 # a dict with x_train, y_train, x_test, y_test
 #from load_data import data
 
-from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler, MaxAbsScaler
-from sklearn.linear_model import SGDClassifier as SGD
 
 #
 

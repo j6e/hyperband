@@ -1,12 +1,13 @@
 "function (and parameter space) definitions for hyperband"
 "binary classification with extremely randomized trees"
 
+from sklearn.ensemble import ExtraTreesClassifier as XT
+
 from common_defs import *
 
 # a dict with x_train, y_train, x_test, y_test
 #from load_data import data
 
-from sklearn.ensemble import ExtraTreesClassifier as XT
 
 #
 

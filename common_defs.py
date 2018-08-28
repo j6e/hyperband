@@ -1,16 +1,16 @@
 "imports and definitions shared by various defs files"
 
-import numpy as np
-
 from math import log, sqrt
-from time import time
 from pprint import pprint
+from time import time
 
-from sklearn.metrics import roc_auc_score as AUC, log_loss, accuracy_score as accuracy
-from sklearn.metrics import mean_squared_error as MSE, mean_absolute_error as MAE
-
-from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler, MaxAbsScaler
-
+import numpy as np
+from sklearn.metrics import accuracy_score as accuracy
+from sklearn.metrics import log_loss
+from sklearn.metrics import mean_absolute_error as MAE
+from sklearn.metrics import mean_squared_error as MSE
+from sklearn.metrics import roc_auc_score as AUC
+from sklearn.preprocessing import MaxAbsScaler, MinMaxScaler, RobustScaler, StandardScaler
 
 try:
     from hyperopt import hp

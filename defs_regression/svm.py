@@ -1,10 +1,11 @@
 "function (and parameter space) definitions for hyperband"
 "regression with gradient boosting"
 
-from common_defs import *
+from copy import copy
 
 from sklearn.svm import SVR
-from copy import copy
+
+from common_defs import *
 
 iterations_per_n = 500
 

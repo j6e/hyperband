@@ -1,12 +1,12 @@
 import pickle as pickle
-from pprint import pprint
 from functools import partial
+from pprint import pprint
 
-from hyperband import Hyperband
 from defs.meta import get_params as get_params_c
 from defs.meta import try_params as try_params_c
 from defs_regression.meta import get_params as get_params_r
 from defs_regression.meta import try_params as try_params_r
+from hyperband import Hyperband
 
 
 def classification_meta_model(data, output_file='results.pkl', max_iter=81, eta=3):

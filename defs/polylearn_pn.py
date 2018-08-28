@@ -1,13 +1,14 @@
 "function (and parameter space) definitions for hyperband"
 "binary classification with polylearn polynomial networks"
 
+from sklearn.preprocessing import MaxAbsScaler, MinMaxScaler, RobustScaler, StandardScaler
+
 from common_defs import *
+from polylearn import PolynomialNetworkClassifier as PN
 
 # a dict with x_train, y_train, x_test, y_test
 #from load_data import data
 
-from polylearn import PolynomialNetworkClassifier as PN
-from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler, MaxAbsScaler
 
 #
 

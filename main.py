@@ -3,11 +3,9 @@
 "a more polished example of using hyperband"
 "includes displaying best results and saving to a file"
 
-import sys
 import pickle as pickle
+import sys
 from pprint import pprint
-
-from hyperband import Hyperband
 
 # from defs.gb import get_params, try_params
 # from defs.rf import get_params, try_params
@@ -19,6 +17,7 @@ from hyperband import Hyperband
 # from defs.polylearn_pn import get_params, try_params
 # from defs.xgb import get_params, try_params
 from defs.meta import get_params, try_params
+from hyperband import Hyperband
 
 try:
     output_file = sys.argv[1]

@@ -2,12 +2,12 @@
 
 "A regression example. Mostly the same, only importing from defs_regression."
 
-import sys
 import pickle as pickle
+import sys
 from pprint import pprint
 
-from hyperband import Hyperband
 from defs_regression.meta import get_params, try_params
+from hyperband import Hyperband
 
 try:
     output_file = sys.argv[1]
